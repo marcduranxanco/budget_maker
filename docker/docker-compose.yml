@@ -1,0 +1,50 @@
+# docker-compose.yml
+version: '3'
+services:
+
+  php:
+    image: php:8.0.3-cli
+    volumes:
+      - ../${NAME_PROJECT}:/app
+    ports:
+        - "${PHP_PORT}:9000"
+    working_dir: /app
+    links:
+      - mysql
+
+  # phpunit:
+  #   image: php:8.0.3-cli
+  #   volumes:
+  #     - ../${NAME_PROJECT}:/app
+  #   working_dir: /app
+  #   entrypoint: vendor/phpunit
+
+  fpm:
+    image: php:8.0.3-fpm
+    restart: always
+    volumes:
+      - ../${NAME_PROJECT}:/app
+
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ../${NAME_PROJECT}:/app
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    links:
+      - php
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "${MYSQL_PORT}:3306"
+    environment: 
+      - MYSQL_DATABASE= ${MYSQL_DATABASE}
+      - MYSQL_USER= ${MYSQL_USER}
+      - MYSQL_PASSWORD= ${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD= ${MYSQL_PASSWORD}
+    volumes:
+      - ./docker/mysql/scripts/:/docker-entrypoint-initdb.d/
+      - ./docker/mysql/data:/var/lib/mysql
