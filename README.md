@@ -1,62 +1,21 @@
-# DOCKER WITH PHP + MYSQL
+# BUDGET MAKER
 
-# About this project
-This project is prepared to be executed with Docker. 
-It has a makefile that allows you to perform the main actions.
+## Sobre este proyecto
+El proyecto consistirá en desarrollar una aplicación utilizando Symfony, enfocada en un sistema de autopresupuesto para una página web. Los usuarios podrán ingresar los servicios que necesitan y recibir un presupuesto aproximado, dejando sus datos de contacto para futuras gestiones comerciales. Además, se implementarán paneles de gestión interna para administrar las solicitudes de presupuesto y proyectos convertidos en contratos. Se utilizarán tecnologías como PHP 8, Symfony 6.4/7, MySQL, JavaScript, CSS, Docker, y herramientas como Vscode o PhpStorm, demostrando conocimientos en diversas áreas de desarrollo web.
 
-## Create a new project and first run
-- Merge the current branch to main
-    ```
-    git checkout origin/docker-symfony-mysql
-    git merge --strategy=ours main #git merge --allow-unrelated-histories -s ours main
-    git checkout main
-    git merge origin/docker-symfony-mysql
-    ```
-- Remove unused branches and 
-- Create the .env file from the .env.example and set the variables
-- Copy or create the project on the app folder
+## Instrucciones técnicas
 
-## Update the database environtment variables
-```
-...
-MYSQL_PORT=3306
-MYSQL_ROOT_PASSWORD=root
-MYSQL_DATABASE=symfony
-MYSQL_USER=symfony
-MYSQL_PASSWORD=symfony
-...
-```
+### Inicializar el proyecto
+- `make up`: inicia los contenedores de Docker
+- `make down`: detiene los contenedores de Docker
+- `make bash`: accede al contenedor de PHP
 
-# Symfony installation
-```
-# Access to the container
-make bash
+### Otros comandos disponibles
+- `make setup`: Configura el proyecto. Aplica permisos 777 en el directorio de almacenamiento del proyecto
+- `make tests`: ejecuta las pruebas del proyecto
 
-# Install the project
-composer create-project symfony/skeleton:"7.0.*" .
-composer require webapp
-```
-
-- Set up the project with `make setup` [WARNING] - This environtment is for development purposes. This command, makes unsafe environtment for security
-- Update de database conection in the .env project file: `DATABASE_URL="mysql://MYSQL_USER:MYSQL_PASSWORD@127.0.0.1:3306/MYSQL_DATABASE?serverVersion=5.7&charset=utf8mb4"`
-- Start the project `make up`
-
-## Make description
-- `make setup`: Set up the project. Apply 777 permissions on the storage project directory
-- `make up`: starts the docker containers
-- `make down`: stops the docker containers
-- `make bash`: access to the php container
-- `make tests`: runs the project tests
-
-# Main docker-compose commands
-
-Add phpunit and test it
-```
-docker-compose run php vendor/bin/phpunit
-docker-compose run php vendor/bin/phpunit --version
-```
-
-Run phpunit tests
-```
-docker-compose run php vendor/bin/phpunit tests
-```
+## Enlaces de interés
+- Enlace al diario de desarrollo:
+    - [Diario de desarrollo](https://vast-asparagus-778.notion.site/Diari-de-desenvolupament-d82db5597e314c6a831487625e732cb8?pvs=74)
+- Enlace al proyecto de git (commits de main):
+    - [Commits de main](https://github.com/marcduranxanco/budget_maker/commits/main/)
